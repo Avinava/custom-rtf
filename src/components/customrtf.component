@@ -1,74 +1,81 @@
 <apex:component selfClosing="true">
-    <apex:attribute name="targetclass" description="class for the target textarea" type="string" required="true"/>
-    <apex:attribute name="imageupload" type="Boolean" default="false" description="set false if you don't want the image upload options"/>
-    <apex:attribute name="uniqueid" type="String" default="" description="unique Identifier needed when using multiple components"/>
-    <apex:includeScript value="/ckeditor/ckeditor-3.6.2/ckeditor.js?t=3.6.2.14"/>
+    <apex:attribute name="targetclass" description="class for the target textarea" type="string" required="true" />
+    <apex:attribute name="imageupload" type="Boolean" default="false" description="set false if you don't want the image upload options" />
+    <apex:attribute name="uniqueid" type="String" default="" description="unique Identifier needed when using multiple components" />
+    <apex:includeScript value="/ckeditor/ckeditor-4.x/rel/ckeditor.js?t=4.4.4.5" />
     <script>
-    
-    function initRTF{!uniqueid}(){
-        $('.{!targetclass}').each(function(){
-            createRTF(this.name);
-        });
-    }
-    
-    function createRTF(nm){
-         if(CKEDITOR.instances[nm]){
-             CKEDITOR.instances[nm].destroy(true);
-         }
-         CKEDITOR.replace(nm, {
-            baseHref:'https://'+window.location.hostname+ '/ckeditor/ckeditor-3.6.2/',
-            customConfig : '/ckeditor/ckeditor-3.6.2/ckeditor.config.js',
-            height: '225',
-            bodyId: nm + '_rta_body',
-            extraPlugins: "{!IF(imageupload,'sfdcImage,sfdcImagePaste,','')}sfdcSwitchToText,iframedialog,MediaEmbed,smartLink",
-            toolbar: 'Visualforce',
-            sharedSpaces: {
-                top: 'cke_topSpace',
-                bottom: ' cke_bottomSpace'
-            },
-            filebrowserImageUploadUrl: '/_ui/common/request/servlet/RtaImageUploadServlet',
-            contentsCss: [CKEDITOR.basePath + 'contents.css', '/sCSS/30.0/sprites/1401314678000/Theme3/default/gc/CKEditor.css'],
-            language: 'en-us',
-            sfdcLabels: {
-                CkeMediaEmbed: {
-                    title: 'Embed Multimedia Content',
-                    description: 'Use &lt;iframe&gt; code from DailyMotion, Vimeo, and Youtube.',
-                    subtitle: 'Paste &amp;lt;iframe&amp;gt; code here:',
-                    exampleTitle: 'Example:',
-                    example: '\n            \n                &lt;iframe width=\&quot;560\&quot; height=\&quot;315\&quot; src=\&quot;https://www.youtube.com/embed/KcOm0TNvKBA\&quot; frameborder=\&quot;0\&quot; allowfullscreen&gt;&lt;/iframe&gt;\n            \n        ',
-                    iframeMissing: 'Invalid &lt;iframe&gt; element. Please use valid code from the approved sites.'
-                },
-                sfdcSwitchToText: {
-                    sfdcSwitchToTextAlt: 'Use plain text'
-                },
-                CkeImageDialog: {
-                    uploadTab: 'Upload Image',
-                    infoTab_url: 'URL',
-                    error: 'Error:',
-                    uploadTab_desc_info: 'Enter a description of the image for visually impaired users',
-                    uploadTab_desc: 'Description',
-                    infoTab_url_info: 'Example: http://www.mysite.com/myimage.jpg',
-                    btn_insert: 'Insert',
-                    missingUrlError: 'You must enter a URL',
-                    uploadTab_file: 'Select Image',
-                    infoTab_desc: 'Description',
-                    btn_upadte: 'Update',
-                    wrongFileTypeError: 'You can insert only .gif .jpeg and .png files.',
-                    infoTab: 'Web Address',
-                    title: 'Insert Image',
-                    infoTab_desc_info: 'Enter a description of the image for visually impaired users',
-                    imageUploadLimit_info: 'Max number of upload images exceeded',
-                    uploadTab_file_info: 'Maximum size 1 MB. Only png, gif or jpeg'
-                },
-                CkeImagePaste: {
-                    CkeImagePasteWarning: 'Pasting an image is not working properly with Firefox, please use [Copy Image location] instead.'
-                }
+        function initRTF {!uniqueid}() {
+            var textareas = getElementsByClassName('{!targetclass}');
+            for (var i = 0; i < textareas.length; i++) {
+                createRTF(textareas[i].name);
             }
-        });
-    }
-    
-    setTimeout(function(){
-           initRTF{!uniqueid}();
-        },1000);
+        }
+
+        function createRTF(nm) {
+            CKEDITOR.timestamp = '4.4.4.5';
+            var protocolAndHost = window.location.protocol + '//' + window.location.host
+            if (CKEDITOR.instances[nm]) {
+                CKEDITOR.instances[nm].destroy(true);
+            }
+            CKEDITOR.replace(nm, {
+                removePlugins: 'elementspath,maximize,image,tabletools,liststyle,contextmenu,resize',
+                baseHref: protocolAndHost + '/ckeditor/ckeditor-4.x/rel/',
+                customConfig: '/ckeditor/ckeditor-4.x/rel/sfdc-config.js',
+                height: '200',
+                bodyId: 'j_id0:j_id1:j_id6_rta_body',
+                toolbar: 'Visualforce',
+                sfdcLabels: {
+                    CkeMediaEmbed: {
+                        title: 'Embed Multimedia Content',
+                        description: 'Use &lt;iframe&gt; code from DailyMotion, Vimeo, and Youtube.',
+                        subtitle: 'Paste &amp;lt;iframe&amp;gt; code here:',
+                        exampleTitle: 'Example:',
+                        example: '\n            \n                &lt;iframe width=\&quot;560\&quot; height=\&quot;315\&quot; src=\&quot;https://www.youtube.com/embed/KcOm0TNvKBA\&quot; frameborder=\&quot;0\&quot; allowfullscreen&gt;&lt;/iframe&gt;\n            \n        ',
+                        iframeMissing: 'Invalid &lt;iframe&gt; element. Please use valid code from the approved sites.'
+                    },
+                    sfdcSwitchToText: {
+                        sfdcSwitchToTextAlt: 'Use plain text'
+                    },
+                    CkeImageDialog: {
+                        uploadTab: 'Upload Image',
+                        infoTab_url: 'URL',
+                        error: 'Error:',
+                        uploadTab_desc_info: 'Enter a description of the image for visually impaired users',
+                        uploadTab_desc: 'Description',
+                        infoTab_url_info: 'Example: http://www.mysite.com/myimage.jpg',
+                        btn_insert: 'Insert',
+                        defaultImageDescription: 'User-added image',
+                        missingUrlError: 'You must enter a URL',
+                        uploadTab_file: 'Select Image',
+                        infoTab_desc: 'Description',
+                        btn_upadte: 'Update',
+                        wrongFileTypeError: 'You can insert only .gif .jpeg and .png files.',
+                        btn_update_tooltip: 'Update Image',
+                        infoTab: 'Web Address',
+                        btn_insert_tooltip: 'Insert Image',
+                        title: 'Insert Image',
+                        infoTab_desc_info: 'Enter a description of the image for visually impaired users',
+                        imageUploadLimit_info: 'Max number of upload images exceeded',
+                        uploadTab_file_info: 'Maximum size 1 MB. Only png, gif or jpeg',
+                        btn_update: 'Update'
+                    },
+                    CkeImagePaste: {
+                        CkeImagePasteWarning: 'Pasting an image is not working properly with Firefox, please use [Copy Image location] instead.'
+                    }
+                },
+                contentsCss: ['/ckeditor/ckeditor-4.x/rel/contents.css', '/sCSS/32.0/sprites/1420068168000/Theme3/default/gc/CKEditor.css'],
+                disableNativeSpellChecker: true,
+                language: 'en-us',
+                allowIframe: false,
+                sharedSpaces: {
+                    top: 'cke_topSpace',
+                    bottom: ' cke_bottomSpace'
+                }
+            });
+        }
+
+        setTimeout(function() {
+            initRTF {!uniqueid}();
+        }, 1000);
     </script>
 </apex:component>
