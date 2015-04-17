@@ -2,7 +2,7 @@
     <apex:attribute name="targetclass" description="class for the target textarea" type="string" required="true"/>
     <apex:attribute name="imageupload" type="Boolean" default="false" description="set false if you don't want the image upload options"/>
     <apex:attribute name="uniqueid" type="String" default="" description="unique Identifier, needed when using multiple components"/>
-    <apex:attribute name="toolbar" type="String" default="Visualforce" description="valid values are Visualforce,HomePageComponent,SalesforceBasic,EmailMultiFormat,Email,SalesforceLight,Knowledge,KnowledgeWithIframes,ServiceCommunity"/>
+    <apex:attribute name="toolbar" type="String" default="Visualforce" description="valid values are Full,Visualforce,HomePageComponent,SalesforceBasic,EmailMultiFormat,Email,SalesforceLight,Knowledge,KnowledgeWithIframes,ServiceCommunity"/>
     
     <apex:includeScript value="{!URLFOR($Resource.customrtf,'/js/ckeditor.js')}"/>
     <script>
