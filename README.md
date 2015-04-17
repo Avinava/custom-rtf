@@ -21,9 +21,12 @@ custom-rtf visualforce component lets you add richtext capability to a text area
 ```
 ###Screenshot
 ![Basic View ](screenshots/Basicview.png)
+![Email View ](screenshots/Email.png)
+![Full View ](screenshots/Full.png)
+![Knowledge View ](screenshots/Knowledge.png)
 
 
 ### TO DO
 - [X] Move js files to static resource
-- [ ] add different layouts that salesforce allows
+- [X] add different layouts that salesforce allows
 
