@@ -4,5 +4,9 @@
         <members>customrtf</members>
         <name>ApexComponent</name>
     </types>
+    <types>
+        <members>customrtf</members>
+        <name>StaticResource</name>
+    </types>
     <version>29.0</version>
 </Package>
